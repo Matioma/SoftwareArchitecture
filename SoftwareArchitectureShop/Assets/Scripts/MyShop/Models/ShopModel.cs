@@ -50,7 +50,7 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
 
 
 
-    Item SelectPreviousItem() {
+    Item SelectLastItem() {
         if (selectedItem == null) return null;  // Nothing was selected
 
         Item currentItem = this.selectedItem; 
@@ -58,7 +58,7 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
 
         List<Item> visibleItems = GetShopItems(); 
         int index =visibleItems.IndexOf(selectedItem);
-        
+
         if (index==0) {
             if (visibleItems.Count > 0)
             {
@@ -114,7 +114,7 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
             Debug.Log("Item could not be purchased"); 
             return;
         }
-        Item previousItem =SelectPreviousItem();
+        Item previousItem =SelectLastItem();
         shopInventory.TransferItem(previousItem, playerInventory);
         onInventoryUpdate?.Invoke();
     }
@@ -126,27 +126,117 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
 
     public void SelectNextCategory()
     {
+        if (NextCategory(selectedCategory) == null) { 
+            Debug.LogError("Unkown Category"); 
+        }
 
-        Debug.Log("Select Next Category");
-        //throw new NotImplementedException();
+        selectedCategory = NextCategory(selectedCategory).Value;
+        onInventoryUpdate?.Invoke();
     }
-
     public void SelectPreviousCategory()
     {
-        Debug.Log("Select Previous Category");
-        //throw new NotImplementedException();
+        if (PreviousCategory(selectedCategory) == null)
+        {
+            Debug.LogError("Unkown Category");
+        }
+
+        selectedCategory = PreviousCategory(selectedCategory).Value;
+        onInventoryUpdate?.Invoke();
     }
 
+
+
+    //Utility function to get the next Category
+    ItemsCategory? NextCategory(ItemsCategory category) {
+        //ItemsCategory.
+        switch (category) {
+            
+            case ItemsCategory.All:
+                return ItemsCategory.Weapon;
+     
+            case ItemsCategory.Armor:
+                return ItemsCategory.Potion;
+         
+            case ItemsCategory.Potion:
+                return ItemsCategory.All;
+          
+            case ItemsCategory.Weapon:
+                return ItemsCategory.Armor;
+              
+            default:
+                Debug.LogError("Unknown Category");
+                return null;
+              
+        }
+    }
+    
+    //Utility function to get the previous Category
+    ItemsCategory? PreviousCategory(ItemsCategory category)
+    {
+        //ItemsCategory.
+        switch (category)
+        {
+            case ItemsCategory.All:
+                return ItemsCategory.Potion;
+                
+            case ItemsCategory.Armor:
+                return ItemsCategory.Weapon;
+                
+            case ItemsCategory.Potion:
+                return ItemsCategory.Armor;
+                
+            case ItemsCategory.Weapon:
+                return ItemsCategory.All;
+                
+            default:
+                Debug.LogError("Unknown Category");
+                return null;
+                
+        }
+    }
+
+    
     public void SelectNextItem()
     {
-        Debug.Log("Select next item");
+        List<Item> visibleItems = GetShopItems();
+        if (visibleItems.Count == 0) return; //
+
+        if (selectedItem == null)
+        {
+            SelectItem(visibleItems[0]);
+        }
+        else {
+            int index = visibleItems.IndexOf(selectedItem);
+            SelectItem(visibleItems[(index + 1) % visibleItems.Count]);
+        }
     }
 
-    void IShopKeyboardActions.SelectPreviousItem()
+    public void SelectPreviousItem()
     {
-        Debug.Log("Select Prevous item");
-        throw new NotImplementedException();
+        List<Item> visibleItems = GetShopItems();
+        if (visibleItems.Count == 0) return; //
+
+        if (selectedItem == null)
+        {
+            SelectItem(visibleItems[0]);
+        }
+        else
+        {
+            int index = visibleItems.IndexOf(selectedItem);
+
+            if (index - 1 < 0)
+            {
+                SelectItem(visibleItems[visibleItems.Count-1]);
+            }
+            else {
+                SelectItem(visibleItems[(index - 1) % visibleItems.Count]);
+            }
+
+
+          
+        }
     }
+
 }
 
 

@@ -6,10 +6,10 @@ using UnityEngine;
 
 
 public enum ItemsCategory{ 
-    All,
-    Armor,
-    Weapon,
-    Potion
+    All=0,
+    Armor=1,
+    Weapon=2,
+    Potion=3
 }
 
 
@@ -20,12 +20,16 @@ public class Inventory : MonoBehaviour
 
     [SerializeField]
     int currencyBalance = 0;
-    //ItemsCategory currentCategory = ItemsCategory.All;
-
-    ushort selectedIndex = 0;
 
 
-    
+
+
+    public Item getItem(int index) {
+        if (items.Count == 0) return null;
+        if (index < 0 || index > items.Count - 1) return null;
+        
+        return items[index];
+    }
 
     public void AddItem(Item item) {
         items.Add(item);

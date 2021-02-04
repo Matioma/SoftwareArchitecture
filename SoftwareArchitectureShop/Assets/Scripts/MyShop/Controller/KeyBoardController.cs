@@ -9,7 +9,6 @@ public class KeyBoardController : BaseController, IShopKeyboardActions
     private void Awake()
     {
         base.Awake();
-        //shopShopModel = FindObjectOfType<ShopModel>();
         shopKeyboardActions = shopShopModel.GetComponent<IShopKeyboardActions>();
         if (shopKeyboardActions == null)
         {
@@ -37,10 +36,6 @@ public class KeyBoardController : BaseController, IShopKeyboardActions
         shopKeyboardActions.SelectPreviousItem();
     }
 
-
-
-
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return)) {
@@ -61,8 +56,4 @@ public class KeyBoardController : BaseController, IShopKeyboardActions
         }
     }
 
-    public void Buy()
-    {
-        throw new System.NotImplementedException();
-    }
 }
