@@ -20,7 +20,7 @@ public abstract class Item
     public string spriteFile;
     public int price = 0;
     public string attributes="Random Attribute";
-    public string echantements;
+    public List<string> echantements = new List<string>();
     public string description;
     public ItemRarity rarity;
 

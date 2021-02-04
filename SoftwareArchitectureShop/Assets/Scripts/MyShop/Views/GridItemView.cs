@@ -26,7 +26,12 @@ public class GridItemView : ItemView
         priceTarget.text = item.price.ToString();
         categoryTarget.text = item.GetType().ToString();
         attributesTarget.text = item.attributes;
-        echantementsTarget.text = item.echantements;
+
+        string enchantementText = "";
+        foreach (var enchantment in item.echantements) { enchantementText += enchantment + "\n"; }
+
+        Debug.LogWarning(enchantementText);
+        echantementsTarget.text = enchantementText;
         descriptionTarget.text = item.description;
         ratityTarget.text = item.rarity.ToString();
 
