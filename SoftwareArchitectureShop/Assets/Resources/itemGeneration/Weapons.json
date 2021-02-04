@@ -17,5 +17,12 @@
     "Stolen from a goblin"
 
   ],
-  "enchantements": []
+  "enchantements": [
+    "5% lifesteal",
+    "25% lifesteal",
+    "50% crit chance",
+    "recover 5 mana on hit",
+    "Your attacks become ranged",
+    "Your attacks can not be dodged"
+  ]
 }

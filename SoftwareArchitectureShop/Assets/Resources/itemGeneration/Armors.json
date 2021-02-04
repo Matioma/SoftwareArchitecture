@@ -18,6 +18,11 @@
     "Armor made of wrackage"
   ],
   "enchantements": [
-    
+    "-30% attack speed to the enemy",
+    "health regen 10 hp per sec",
+    "10% melee damage reflect",
+    "+10 movement speed",
+    "increase mana by 200",
+    "use mana instead of HP"
   ]
 }

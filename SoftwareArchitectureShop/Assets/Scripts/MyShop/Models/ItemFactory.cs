@@ -33,6 +33,7 @@ public class ItemFactory : IItemFactory
         armor.description = data.descriptions[random.Next(0, data.descriptions.Length)];
         armor.rarity = CreateItemRarity();
 
+        armor.attributes = random.Next(1, 20) + " armor";
 
 
         return armor;
@@ -41,7 +42,6 @@ public class ItemFactory : IItemFactory
     public Weapon CreateWeapon()
     {
         //Weapon weapon = new Weapon("WeaponObject " + random.Next(0, 1000), "items_" + random.Next(73, 102), 10);
-
         ItemDataFile data = JsonUtility.FromJson<ItemDataFile>(LoadFile("itemGeneration/Weapons").text);
 
         //LoadFile

@@ -17,5 +17,12 @@
     "Look like it could heal you",
     "This one is addictive, drink it and you will lose thousands of gold"
   ],
-  "enchantements": []
+  "enchantements": [
+    "+ 40% movement speed for 5 second",
+    "remove all debuffs",
+    "increase in health and size by 20%",
+    "Die instantly",
+    "Recover extra 50 mana",
+    "Reset cooldowns"
+  ]
 }
