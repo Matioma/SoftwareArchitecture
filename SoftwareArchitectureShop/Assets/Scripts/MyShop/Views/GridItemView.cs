@@ -28,7 +28,7 @@ public class GridItemView : ItemView
         attributesTarget.text = item.attributes;
         echantementsTarget.text = item.echantements;
         descriptionTarget.text = item.description;
-        ratityTarget.text = item.rarity;
+        ratityTarget.text = item.rarity.ToString();
 
         if (item.IsSelected) {
             highLight.SetActive(true);

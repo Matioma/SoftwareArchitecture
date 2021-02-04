@@ -2,6 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum ItemRarity { 
+    Basic=0,
+    Good,
+    Rare,
+    Mythic,
+    Legendary
+}
+
+
 [System.Serializable]
 public abstract class Item
 {
@@ -12,7 +22,7 @@ public abstract class Item
     public string attributes="Random Attribute";
     public string echantements;
     public string description;
-    public string rarity;
+    public ItemRarity rarity;
 
     public bool IsSelected {get;set;}= false;
 
