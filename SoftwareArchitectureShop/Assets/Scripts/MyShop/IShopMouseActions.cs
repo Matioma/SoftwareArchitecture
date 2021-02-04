@@ -7,4 +7,7 @@ public interface IShopMouseActions
     void SelectItem(Item item);
     void SelectCategory(ItemsCategory catergory);
 
+
+    void SelectShopType(ShopType shopType);
+
 }

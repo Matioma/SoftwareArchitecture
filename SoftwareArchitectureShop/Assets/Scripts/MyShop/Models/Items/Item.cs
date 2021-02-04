@@ -9,7 +9,10 @@ public abstract class Item
     public string Name;
     public string spriteFile;
     public int price = 0;
-
+    public string attributes="Random Attribute";
+    public string echantements;
+    public string description;
+    public string rarity;
 
     public bool IsSelected {get;set;}= false;
 

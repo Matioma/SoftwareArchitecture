@@ -50,4 +50,25 @@ public class MouseController : BaseController, IPointerClickHandler,IShopMouseAc
     public void Buy() {
         PerformAction();
     }
+
+
+
+    public void SelectShopCategory(string category) {
+        ShopType itemCategory;
+
+        if (Enum.TryParse(category, true, out itemCategory))
+        {
+            SelectShopType(itemCategory);
+        }
+        else
+        {
+            Debug.LogError("The shop type is wrong");
+        }
+    }
+
+
+    public void SelectShopType(ShopType shopType)
+    {
+        shopMouseAction.SelectShopType(shopType);
+    }
 }

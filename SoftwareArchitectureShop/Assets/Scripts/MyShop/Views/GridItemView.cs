@@ -22,6 +22,14 @@ public class GridItemView : ItemView
     public override void Display()
     {
         IconImageTarget.sprite = this.sprite;
+        NameTarget.text = item.Name;
+        priceTarget.text = item.price.ToString();
+        categoryTarget.text = item.GetType().ToString();
+        attributesTarget.text = item.attributes;
+        echantementsTarget.text = item.echantements;
+        descriptionTarget.text = item.description;
+        ratityTarget.text = item.rarity;
+
         if (item.IsSelected) {
             highLight.SetActive(true);
             InfoPanelGameObject.SetActive(true);

@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum ShopType { 
+    Buy,
+    Sell,
+    Upgrade
+}
+
+
 public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyboardActions
 {
     [SerializeField]
@@ -16,7 +24,16 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
     private Inventory activeInvetory;
 
 
+
+    private ShopType currentShopType = ShopType.Buy;
+
+
+
+
+
     Item selectedItem = null;
+    
+    
     public event Action onInventoryUpdate;
 
 
@@ -42,12 +59,70 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
         }
     }
 
-
     //Return all the items of the currently selected inventory
     public List<Item> GetShopItems() {
         return activeInvetory.GetItems(selectedCategory);
     }
 
+    public void Buy()
+    {
+        if (selectedItem == null) return;
+
+        //Debug.Log("item price is" + selectedItem.price);
+        if (!playerInventory.SpendMoney(selectedItem.price))
+        {
+            Debug.Log("Item could not be purchased");
+            return;
+        }
+        Item previousItem = SelectLastItem();
+        shopInventory.TransferItem(previousItem, playerInventory);
+        onInventoryUpdate?.Invoke();
+    }
+    public void Sell()
+    {
+        if (selectedItem == null) return;
+
+        //Debug.Log("item price is" + selectedItem.price);
+        if (!playerInventory.SpendMoney(selectedItem.price))
+        {
+            Debug.Log("Item could not be purchased");
+            return;
+        }
+        Item previousItem = SelectLastItem();
+        playerInventory.TransferItem(previousItem, shopInventory);
+        onInventoryUpdate?.Invoke();
+    }
+
+    public void Upgrade()
+    {
+        if (selectedItem == null) return;
+
+        //Debug.Log("item price is" + selectedItem.price);
+        if (!playerInventory.SpendMoney(selectedItem.price))
+        {
+            Debug.Log("Item could not be purchased");
+            return;
+        }
+        Item previousItem = SelectLastItem();
+        Debug.Log("To Do  Item Upgrading");
+        //playerInventory.TransferItem(previousItem, shopInventory);
+        onInventoryUpdate?.Invoke();
+    }
+
+    public void SelectShopType(ShopType newShopType) {
+        
+        selectedCategory = ItemsCategory.All;
+        currentShopType = newShopType;
+
+        if (newShopType == ShopType.Sell || newShopType == ShopType.Upgrade)
+        {
+            activeInvetory = playerInventory;
+        }
+        else {
+            activeInvetory = shopInventory;
+        }
+        onInventoryUpdate?.Invoke();
+    }
 
 
     Item SelectLastItem() {
@@ -78,7 +153,6 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
         return currentItem;
         
     }
-        
 
     public void DeselectItem()
     {
@@ -87,7 +161,6 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
         selectedItem.IsSelected = false;
         selectedItem = null;
     }
-
     public void SelectItem(Item item)
     {
         if (item == null) return;
@@ -97,32 +170,30 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
         selectedItem.IsSelected = true;
         onInventoryUpdate?.Invoke();
     }
-
     public void SelectCategory(ItemsCategory catergory)
     {
         DeselectItem();
         selectedCategory = catergory;
         onInventoryUpdate?.Invoke();
     }
-
-    public void Buy()
-    {
-        if (selectedItem == null) return;
-
-        //Debug.Log("item price is" + selectedItem.price);
-        if (!playerInventory.SpendMoney(selectedItem.price)) {
-            Debug.Log("Item could not be purchased"); 
-            return;
-        }
-        Item previousItem =SelectLastItem();
-        shopInventory.TransferItem(previousItem, playerInventory);
-        onInventoryUpdate?.Invoke();
-    }
-
     public void PerformAction()
     {
-        Buy();
+        switch (currentShopType){
+            case ShopType.Buy:
+                Buy();
+                break;
+            case ShopType.Sell:
+                Sell();
+                break;
+            case ShopType.Upgrade:
+                Upgrade();
+                break;
+        }
+      
     }
+
+
+
 
     public void SelectNextCategory()
     {
@@ -143,59 +214,6 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
         selectedCategory = PreviousCategory(selectedCategory).Value;
         onInventoryUpdate?.Invoke();
     }
-
-
-
-    //Utility function to get the next Category
-    ItemsCategory? NextCategory(ItemsCategory category) {
-        //ItemsCategory.
-        switch (category) {
-            
-            case ItemsCategory.All:
-                return ItemsCategory.Weapon;
-     
-            case ItemsCategory.Armor:
-                return ItemsCategory.Potion;
-         
-            case ItemsCategory.Potion:
-                return ItemsCategory.All;
-          
-            case ItemsCategory.Weapon:
-                return ItemsCategory.Armor;
-              
-            default:
-                Debug.LogError("Unknown Category");
-                return null;
-              
-        }
-    }
-    
-    //Utility function to get the previous Category
-    ItemsCategory? PreviousCategory(ItemsCategory category)
-    {
-        //ItemsCategory.
-        switch (category)
-        {
-            case ItemsCategory.All:
-                return ItemsCategory.Potion;
-                
-            case ItemsCategory.Armor:
-                return ItemsCategory.Weapon;
-                
-            case ItemsCategory.Potion:
-                return ItemsCategory.Armor;
-                
-            case ItemsCategory.Weapon:
-                return ItemsCategory.All;
-                
-            default:
-                Debug.LogError("Unknown Category");
-                return null;
-                
-        }
-    }
-
-    
     public void SelectNextItem()
     {
         List<Item> visibleItems = GetShopItems();
@@ -210,7 +228,6 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
             SelectItem(visibleItems[(index + 1) % visibleItems.Count]);
         }
     }
-
     public void SelectPreviousItem()
     {
         List<Item> visibleItems = GetShopItems();
@@ -234,6 +251,62 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
 
 
           
+        }
+    }
+
+
+
+
+
+
+    //Utility function to get the next Category
+    ItemsCategory? NextCategory(ItemsCategory category)
+    {
+        //ItemsCategory.
+        switch (category)
+        {
+
+            case ItemsCategory.All:
+                return ItemsCategory.Weapon;
+
+            case ItemsCategory.Armor:
+                return ItemsCategory.Potion;
+
+            case ItemsCategory.Potion:
+                return ItemsCategory.All;
+
+            case ItemsCategory.Weapon:
+                return ItemsCategory.Armor;
+
+            default:
+                Debug.LogError("Unknown Category");
+                return null;
+
+        }
+    }
+
+    //Utility function to get the previous Category
+    ItemsCategory? PreviousCategory(ItemsCategory category)
+    {
+        //ItemsCategory.
+        switch (category)
+        {
+            case ItemsCategory.All:
+                return ItemsCategory.Potion;
+
+            case ItemsCategory.Armor:
+                return ItemsCategory.Weapon;
+
+            case ItemsCategory.Potion:
+                return ItemsCategory.Armor;
+
+            case ItemsCategory.Weapon:
+                return ItemsCategory.All;
+
+            default:
+                Debug.LogError("Unknown Category");
+                return null;
+
         }
     }
 
