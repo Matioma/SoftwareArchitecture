@@ -4,22 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MouseController : MonoBehaviour, IPointerClickHandler
+public class MouseController : BaseController, IPointerClickHandler,IShopMouseActions
 {
-    ShopModel shopShopModel;
-
-    [SerializeField]
-    IShopActions shopActions;
-
-    [SerializeField]
-    ItemsCategory items = ItemsCategory.Armor;
-
+    IShopMouseActions shopMouseAction;
 
     private void Awake()
     {
-        shopShopModel = FindObjectOfType<ShopModel>();
-        shopActions = shopShopModel.GetComponent<IShopActions>();
-        if (shopActions == null) {
+        base.Awake();
+        //shopShopModel = FindObjectOfType<ShopModel>();
+        shopMouseAction = shopShopModel.GetComponent<IShopMouseActions>();
+        if (shopMouseAction == null) {
             Debug.LogError("Shop Model was not created");
         }
     }
@@ -29,13 +23,13 @@ public class MouseController : MonoBehaviour, IPointerClickHandler
         ItemView itemView = eventData.pointerCurrentRaycast.gameObject.GetComponent<ItemView>();
         if(itemView != null)
         {
-            shopActions.SelectItem(itemView.GetItemData());
+            shopMouseAction.SelectItem(itemView.GetItemData());
         }
     }
 
     public void SelectItem(Item item)
     {
-        shopActions.SelectItem(item);
+        shopMouseAction.SelectItem(item);
     }
 
     public void SelectionCategory(string category) {
@@ -43,16 +37,17 @@ public class MouseController : MonoBehaviour, IPointerClickHandler
 
         if (Enum.TryParse(category, true, out itemCategory))
         {
-            shopActions.SelectCategory(itemCategory);
+            SelectCategory(itemCategory);
         }
         else {
             Debug.LogError("THe category is wrong");
         }
     }
-
-
-    public void Buy() {
-        shopActions.Buy();
+    public void SelectCategory(ItemsCategory catergory)
+    {
+        shopMouseAction.SelectCategory(catergory);
     }
-
+    public void Buy() {
+        PerformAction();
+    }
 }

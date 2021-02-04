@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopModel : MonoBehaviour, IShopActions
+public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyboardActions
 {
     [SerializeField]
     Inventory playerInventory;
@@ -48,6 +48,8 @@ public class ShopModel : MonoBehaviour, IShopActions
         return activeInvetory.GetItems(selectedCategory);
     }
 
+
+
     Item SelectPreviousItem() {
         if (selectedItem == null) return null;  // Nothing was selected
 
@@ -56,8 +58,6 @@ public class ShopModel : MonoBehaviour, IShopActions
 
         List<Item> visibleItems = GetShopItems(); 
         int index =visibleItems.IndexOf(selectedItem);
-        //Debug.Log(index);
-
         
         if (index==0) {
             if (visibleItems.Count > 0)
@@ -66,18 +66,12 @@ public class ShopModel : MonoBehaviour, IShopActions
                 SelectItem(visibleItems[index]);
                 return currentItem;
             }
-
-
             DeselectItem();
             return currentItem;
         }
-
         if (index < 0) {
-            
                 return null;
-           
         }
-
 
         DeselectItem();
         SelectItem(visibleItems[index - 1]);
@@ -115,7 +109,7 @@ public class ShopModel : MonoBehaviour, IShopActions
     {
         if (selectedItem == null) return;
 
-        Debug.Log("item price is" + selectedItem.price);
+        //Debug.Log("item price is" + selectedItem.price);
         if (!playerInventory.SpendMoney(selectedItem.price)) {
             Debug.Log("Item could not be purchased"); 
             return;
@@ -123,6 +117,35 @@ public class ShopModel : MonoBehaviour, IShopActions
         Item previousItem =SelectPreviousItem();
         shopInventory.TransferItem(previousItem, playerInventory);
         onInventoryUpdate?.Invoke();
+    }
+
+    public void PerformAction()
+    {
+        Buy();
+    }
+
+    public void SelectNextCategory()
+    {
+
+        Debug.Log("Select Next Category");
+        //throw new NotImplementedException();
+    }
+
+    public void SelectPreviousCategory()
+    {
+        Debug.Log("Select Previous Category");
+        //throw new NotImplementedException();
+    }
+
+    public void SelectNextItem()
+    {
+        Debug.Log("Select next item");
+    }
+
+    void IShopKeyboardActions.SelectPreviousItem()
+    {
+        Debug.Log("Select Prevous item");
+        throw new NotImplementedException();
     }
 }
 

@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IShopActions 
+public interface IShopActions
 {
-    void SelectItem(Item item);
-
-    void SelectCategory(ItemsCategory catergory);
-
-    void Buy();
+    void PerformAction();
 }
