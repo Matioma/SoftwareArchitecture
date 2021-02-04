@@ -1,22 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GridItemView : ItemView
 {
-    [SerializeField]
-    Image ItemImage; //Set in Prefab
+    [SerializeField] Image IconImageTarget;
+    [SerializeField] TextMeshProUGUI NameTarget;
+    [SerializeField] TextMeshProUGUI priceTarget;
+    [SerializeField] TextMeshProUGUI categoryTarget;
+    [SerializeField] TextMeshProUGUI attributesTarget;
+    [SerializeField] TextMeshProUGUI echantementsTarget;
+    [SerializeField] TextMeshProUGUI descriptionTarget;
+    [SerializeField] TextMeshProUGUI ratityTarget;
 
-
+    [SerializeField] GameObject highLight; //prefab
     [SerializeField]
-    GameObject heightLight; //prefab
+    GameObject InfoPanelGameObject;
 
     public override void Display()
     {
-        ItemImage.sprite = this.sprite;
+        IconImageTarget.sprite = this.sprite;
         if (item.IsSelected) {
-            heightLight.SetActive(true);
+            highLight.SetActive(true);
+            InfoPanelGameObject.SetActive(true);
         }
     }
 }

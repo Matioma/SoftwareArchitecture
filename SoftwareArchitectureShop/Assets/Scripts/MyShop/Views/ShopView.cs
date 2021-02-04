@@ -40,7 +40,7 @@ public class ShopView : MonoBehaviour
     void PopulateTheView()
     {
         ClearView();
-        foreach(var item in shopModel.GetItems()) {
+        foreach(var item in shopModel.GetShopItems()) {
             AddItemToView(item);
         }
     }

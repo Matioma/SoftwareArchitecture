@@ -18,16 +18,20 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     List<Item> items = new List<Item>();
 
-    ItemsCategory currentCategory = ItemsCategory.All;
+    [SerializeField]
+    int currency = 0;
+    //ItemsCategory currentCategory = ItemsCategory.All;
+
+    ushort selectedIndex = 0;
+
+
+    
 
     public void AddItem(Item item) {
         items.Add(item);
     }
 
-
-
-
-
+    //Return all invetory items of a specific type
     public List<Item> GetItems(Type type) {
         List<Item> itemsToGet = new List<Item>();
         foreach (var item in items) {        
@@ -39,7 +43,8 @@ public class Inventory : MonoBehaviour
         return itemsToGet;
     }
 
-    public List<Item> GetItems()
+    //Return all visible items
+    public List<Item> GetItems(ItemsCategory currentCategory)
     {
         List<Item> items = new List<Item>();
 
@@ -63,11 +68,8 @@ public class Inventory : MonoBehaviour
         }
         return items;
     }
-
-
     public void TransferItem(Item item, Inventory destination) {
         destination.items.Add(item);
         items.Remove(item);
     }
-
 }

@@ -12,13 +12,14 @@ public class ShopModel : MonoBehaviour, IShopActions
     ItemFactory itemFactory;
 
 
-    private ItemsCategory currentCategory = ItemsCategory.All;
-
+    private ItemsCategory selectedCategory = ItemsCategory.All;
     private Inventory activeInvetory;
 
 
     Item selectedItem = null;
     public event Action onInventoryUpdate;
+
+
 
     private void Awake()
     {
@@ -42,51 +43,62 @@ public class ShopModel : MonoBehaviour, IShopActions
     }
 
 
-
-
-
-    public List<Item> GetItems() {
-        //return activeInvetory.GetItems();
-
-
-        List<Item> items = new List<Item>();
-
-        switch (currentCategory) {
-            case ItemsCategory.All:
-                items = shopInventory.GetItems(typeof(Item));
-                break;
-            case ItemsCategory.Potion:
-                items = shopInventory.GetItems(typeof(Potion));
-                break;
-            case ItemsCategory.Weapon:
-                items = shopInventory.GetItems(typeof(Weapon));
-                break;
-            case ItemsCategory.Armor:
-                items = shopInventory.GetItems(typeof(Armor));
-                break;
-            default:
-                Debug.LogError("Tried to get unknown category");
-                break;
-        }
-        return items;
+    //Return all the items of the currently selected inventory
+    public List<Item> GetShopItems() {
+        return activeInvetory.GetItems(selectedCategory);
     }
 
-    public void DeselectLastItem()
-    {
-        if (selectedItem != null)
-        {
-            selectedItem.IsSelected = false;
-            selectedItem = null;
+    Item SelectPreviousItem() {
+        if (selectedItem == null) return null;  // Nothing was selected
+
+        Item currentItem = this.selectedItem; 
+
+
+        List<Item> visibleItems = GetShopItems(); 
+        int index =visibleItems.IndexOf(selectedItem);
+        Debug.Log(index);
+
+        
+        if (index==0) {
+            if (visibleItems.Count > 0)
+            {
+                DeselectItem();
+                SelectItem(visibleItems[index]);
+                return currentItem;
+            }
+
+
+            DeselectItem();
+            return currentItem;
         }
+
+        if (index < 0) {
+            
+                return null;
+           
+        }
+
+
+        DeselectItem();
+        SelectItem(visibleItems[index - 1]);
+        return currentItem;
+        
+    }
+        
+
+    public void DeselectItem()
+    {
+        if (selectedItem == null) return; 
+
+        selectedItem.IsSelected = false;
+        selectedItem = null;
     }
 
     public void SelectItem(Item item)
     {
-        if (item == null) {
-            return;
-        }
-        DeselectLastItem();
+        if (item == null) return;
 
+        DeselectItem();
         selectedItem = item;
         selectedItem.IsSelected = true;
         onInventoryUpdate?.Invoke();
@@ -94,9 +106,8 @@ public class ShopModel : MonoBehaviour, IShopActions
 
     public void SelectCategory(ItemsCategory catergory)
     {
-        DeselectLastItem();
-
-        currentCategory = catergory;
+        DeselectItem();
+        selectedCategory = catergory;
         onInventoryUpdate?.Invoke();
     }
 
@@ -104,7 +115,9 @@ public class ShopModel : MonoBehaviour, IShopActions
     {
         if (selectedItem == null) return;
 
-        shopInventory.TransferItem(selectedItem, playerInventory);
+
+        Item previousItem =SelectPreviousItem();
+        shopInventory.TransferItem(previousItem, playerInventory);
         onInventoryUpdate?.Invoke();
     }
 }
