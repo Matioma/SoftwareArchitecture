@@ -56,7 +56,7 @@ public class ShopModel : MonoBehaviour, IShopActions
 
         List<Item> visibleItems = GetShopItems(); 
         int index =visibleItems.IndexOf(selectedItem);
-        Debug.Log(index);
+        //Debug.Log(index);
 
         
         if (index==0) {
@@ -115,7 +115,11 @@ public class ShopModel : MonoBehaviour, IShopActions
     {
         if (selectedItem == null) return;
 
-
+        Debug.Log("item price is" + selectedItem.price);
+        if (!playerInventory.SpendMoney(selectedItem.price)) {
+            Debug.Log("Item could not be purchased"); 
+            return;
+        }
         Item previousItem =SelectPreviousItem();
         shopInventory.TransferItem(previousItem, playerInventory);
         onInventoryUpdate?.Invoke();

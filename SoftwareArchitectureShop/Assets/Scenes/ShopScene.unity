@@ -1779,6 +1779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb480147046af6c40b886b2ef5b12ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currencyBalance: 10000
 --- !u!1 &439186015
 GameObject:
   m_ObjectHideFlags: 0
@@ -2754,6 +2755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb480147046af6c40b886b2ef5b12ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currencyBalance: 0
 --- !u!114 &719175224
 MonoBehaviour:
   m_ObjectHideFlags: 0

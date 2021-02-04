@@ -19,7 +19,7 @@ public class Inventory : MonoBehaviour
     List<Item> items = new List<Item>();
 
     [SerializeField]
-    int currency = 0;
+    int currencyBalance = 0;
     //ItemsCategory currentCategory = ItemsCategory.All;
 
     ushort selectedIndex = 0;
@@ -68,6 +68,21 @@ public class Inventory : MonoBehaviour
         }
         return items;
     }
+
+    public bool canBuy(int amount) {
+        return currencyBalance >= amount;
+    }
+
+    //Spend user Money
+    public bool SpendMoney(int amount) {
+        if (canBuy(amount)) {
+            currencyBalance -= amount;
+            //Debug.Log(currencyBalance);
+            return true;
+        }
+        return false;
+    }
+    
     public void TransferItem(Item item, Inventory destination) {
         destination.items.Add(item);
         items.Remove(item);
