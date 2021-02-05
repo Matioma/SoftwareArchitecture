@@ -16,6 +16,14 @@ public class ItemDataFile {
 public class ItemFactory : IItemFactory
 {
     System.Random random = new System.Random();
+
+
+    int MaxArmor = 20;
+    int minArmor = 1;
+
+    int hpPerRarity = 150;
+    
+    
     TextAsset LoadFile(string Path)
     {
         return Resources.Load<TextAsset>(Path);
@@ -32,15 +40,11 @@ public class ItemFactory : IItemFactory
 
         armor.description = data.descriptions[random.Next(0, data.descriptions.Length)];
         armor.rarity = CreateItemRarity();
+        armor.attributes = random.Next(minArmor, MaxArmor) + " armor";
 
-        armor.attributes = random.Next(1, 20) + " armor";
-
-        //if (random.Next(0, 2)==0) {
+        for (int i = 0; i < (int)armor.rarity; i++) {
             armor.echantements.Add(data.enchantements[random.Next(data.enchantements.Length)]);
-        //Debug.Log(armor.echantements[0]);
-        //}
-
-
+        }
         return armor;
     }
 
@@ -57,6 +61,12 @@ public class ItemFactory : IItemFactory
         weapon.rarity = CreateItemRarity();
 
 
+        
+        for (int i = 0; i < (int)weapon.rarity; i++)
+        {
+            weapon.echantements.Add(data.enchantements[random.Next(data.enchantements.Length)]);
+        }
+
         return weapon;
     }
 
@@ -70,6 +80,16 @@ public class ItemFactory : IItemFactory
         potion.description = data.descriptions[random.Next(0, data.descriptions.Length)];
         potion.rarity = CreateItemRarity();
 
+
+        potion.attributes = ((int)potion.rarity + 1) * hpPerRarity + " hp";
+
+
+
+        for (int i = 0; i < (int)potion.rarity; i++)
+        {
+            potion.echantements.Add(data.enchantements[random.Next(data.enchantements.Length)]);
+        }
+
         return potion;
     }
 
@@ -81,6 +101,4 @@ public class ItemFactory : IItemFactory
 
         return (ItemRarity)values.GetValue(index);
     }
-
-    
 }
