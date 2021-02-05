@@ -41,6 +41,9 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions
 
 
     public Item selectedItem = null;
+
+
+    public Item SelectedItem { get { return selectedItem; }}
     
     
     public event Action onInventoryUpdate;

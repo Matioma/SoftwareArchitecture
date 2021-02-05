@@ -16,6 +16,8 @@ public class ItemInfoPanelView : ItemView
 
     public override void Display()
     {
+
+        iconImage.sprite = sprite;
         NameTarget.text = item.Name;
         attributes.text = item.attributes;
 

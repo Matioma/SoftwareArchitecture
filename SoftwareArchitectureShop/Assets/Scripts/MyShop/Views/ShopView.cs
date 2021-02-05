@@ -23,7 +23,7 @@ public class ShopView : MonoBehaviour
 
 
     [SerializeField]
-
+    ItemInfoPanelView panelView;
 
     private void Awake()
     {
@@ -40,6 +40,7 @@ public class ShopView : MonoBehaviour
         }
 
         shopModel.onInventoryUpdate += updateViews;
+        shopModel.onInventoryUpdate += updateItemPanel;
         updateViews();
     }
 
@@ -84,11 +85,17 @@ public class ShopView : MonoBehaviour
         }
     }
 
+    void updateItemPanel() {
+        if (shopModel.SelectedItem == null) return;
+        panelView.SetItemData(shopModel.SelectedItem);
+    }
+
     void AddListItemToView(Item newItem) {
         GameObject itemObj = Instantiate(listItemPrefab, listItemsContainer.transform);
         itemObj.GetComponentInChildren<ItemView>().SetItemData(newItem);
         itemObj.GetComponentInChildren<ItemView>().Display();
     }
+
 
     void AddGridItemToView(Item newItem) {
        GameObject itemObj = Instantiate(gridItemPrefab, gridItemsContainer.transform);
@@ -102,5 +109,6 @@ public class ShopView : MonoBehaviour
         //shopModel.onInventoryUpdate -= PopulateListView;
 
         shopModel.onInventoryUpdate -= updateViews;
+        shopModel.onInventoryUpdate -= updateItemPanel;
     }
 }
