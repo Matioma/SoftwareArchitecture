@@ -11,27 +11,36 @@ public enum ShopType {
 }
 
 
-public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyboardActions
+public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions
 {
     [SerializeField]
-    Inventory playerInventory;
+    public Inventory playerInventory;
     [SerializeField]
-    Inventory shopInventory;
+    public Inventory shopInventory;
     ItemFactory itemFactory;
 
 
-    private ItemsCategory selectedCategory = ItemsCategory.All;
-    private Inventory activeInvetory;
+    public ItemsCategory selectedCategory = ItemsCategory.All;
+    //public Inventory activeInvetory;
 
 
 
-    private ShopType currentShopType = ShopType.Buy;
+    //private ShopType currentShopType = ShopType.Buy;
+
+
+    ShopContext shopContext=new ShopContext(); //Shop context
 
 
 
 
 
-    Item selectedItem = null;
+
+
+
+
+
+
+    public Item selectedItem = null;
     
     
     public event Action onInventoryUpdate;
@@ -40,7 +49,8 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
 
     private void Awake()
     {
-        activeInvetory = shopInventory;
+        shopContext.setShopState(new BuyState());
+        //activeInvetory = shopInventory;
         itemFactory = new ItemFactory();
         GenerateShopProducts();
     }
@@ -61,7 +71,8 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
 
     //Return all the items of the currently selected inventory
     public List<Item> GetShopItems() {
-        return activeInvetory.GetItems(selectedCategory);
+        return shopContext.GetShopItems(this);
+        //return activeInvetory.GetItems(selectedCategory);
     }
 
     public void Buy()
@@ -112,20 +123,20 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
     public void SelectShopType(ShopType newShopType) {
         
         selectedCategory = ItemsCategory.All;
-        currentShopType = newShopType;
+        //currentShopType = newShopType;
 
-        if (newShopType == ShopType.Sell || newShopType == ShopType.Upgrade)
-        {
-            activeInvetory = playerInventory;
-        }
-        else {
-            activeInvetory = shopInventory;
-        }
+        onInventoryUpdate?.Invoke();
+    }
+
+    public void SelectShopType(IShopActions newShopState)
+    {
+        shopContext.setShopState(newShopState);
         onInventoryUpdate?.Invoke();
     }
 
 
-    Item SelectLastItem() {
+
+    public Item SelectLastItem() {
         if (selectedItem == null) return null;  // Nothing was selected
 
         Item currentItem = this.selectedItem; 
@@ -178,22 +189,9 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopActions,IShopKeyb
     }
     public void PerformAction()
     {
-        switch (currentShopType){
-            case ShopType.Buy:
-                Buy();
-                break;
-            case ShopType.Sell:
-                Sell();
-                break;
-            case ShopType.Upgrade:
-                Upgrade();
-                break;
-        }
-      
+        shopContext.PerformAction(this);
+        onInventoryUpdate?.Invoke();
     }
-
-
-
 
     public void SelectNextCategory()
     {

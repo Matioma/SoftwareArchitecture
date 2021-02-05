@@ -37,7 +37,7 @@ public class ItemFactory : IItemFactory
 
         //if (random.Next(0, 2)==0) {
             armor.echantements.Add(data.enchantements[random.Next(data.enchantements.Length)]);
-        Debug.Log(armor.echantements[0]);
+        //Debug.Log(armor.echantements[0]);
         //}
 
 

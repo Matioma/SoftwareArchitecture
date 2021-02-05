@@ -6,9 +6,9 @@ public class KeyBoardController : BaseController, IShopKeyboardActions
 {
     IShopKeyboardActions shopKeyboardActions;
 
-    private void Awake()
-    {
-        base.Awake();
+
+    private void Start() {
+        base.Start();
         shopKeyboardActions = shopShopModel.GetComponent<IShopKeyboardActions>();
         if (shopKeyboardActions == null)
         {

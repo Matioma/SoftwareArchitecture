@@ -8,12 +8,14 @@ public class MouseController : BaseController, IPointerClickHandler,IShopMouseAc
 {
     IShopMouseActions shopMouseAction;
 
-    private void Awake()
+
+
+    private void Start()
     {
-        base.Awake();
-        //shopShopModel = FindObjectOfType<ShopModel>();
+        base.Start();
         shopMouseAction = shopShopModel.GetComponent<IShopMouseActions>();
-        if (shopMouseAction == null) {
+        if (shopMouseAction == null)
+        {
             Debug.LogError("Shop Model was not created");
         }
     }
@@ -69,6 +71,17 @@ public class MouseController : BaseController, IPointerClickHandler,IShopMouseAc
 
     public void SelectShopType(ShopType shopType)
     {
-        shopMouseAction.SelectShopType(shopType);
+        switch (shopType) {
+            case ShopType.Buy:
+                shopShopModel.SelectShopType(new BuyState());
+                break;
+            case ShopType.Sell:
+                shopShopModel.SelectShopType(new SellState());
+                break;
+            case ShopType.Upgrade:
+                shopShopModel.SelectShopType(new UpgradeState());
+                break;
+        }
+        //shopMouseAction.SelectShopType(shopType);
     }
 }

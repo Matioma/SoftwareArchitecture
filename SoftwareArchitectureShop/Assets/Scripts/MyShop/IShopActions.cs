@@ -4,5 +4,8 @@ using UnityEngine;
 
 public interface IShopActions
 {
-    void PerformAction();
+    void PerformAction(ShopModel shopModel);
+
+    List<Item> GetShopItems(ShopModel shopModel);
+
 }
