@@ -14,38 +14,71 @@ public class ShopView : MonoBehaviour
     [SerializeField]
     GameObject gridItemsContainer;
 
+
+    [SerializeField]
+    GameObject listItemPrefab;
+    [SerializeField]
+    GameObject listItemsContainer;
+
     private void Awake()
     {
-        shopModel = FindObjectOfType<ShopModel>();
-        if (shopModel == null) {
-            Debug.LogError("There is no Shop Model in the scene");
-        }
-
-        shopModel.onInventoryUpdate += PopulateTheView;
+      
     }
 
 
     private void Start()
     {
-        PopulateTheView();
-    }
-
-
-    void ClearView() {
-        while (gridItemsContainer.transform.childCount > 0)
+        shopModel = FindObjectOfType<ShopModel>();
+        if (shopModel == null)
         {
-            DestroyImmediate(gridItemsContainer.transform.GetChild(0).gameObject);
+            Debug.LogError("There is no Shop Model in the scene");
         }
+
+        shopModel.onInventoryUpdate += PopulateGridView;
+        PopulateGridView();
     }
-    void PopulateTheView()
+
+
+    void ClearView() { 
+        if(gridItemsContainer != null){
+            while (gridItemsContainer.transform.childCount > 0)
+            {
+                DestroyImmediate(gridItemsContainer.transform.GetChild(0).gameObject);
+            }
+        }
+        
+
+        if (listItemsContainer != null) {
+            while (listItemsContainer.transform.childCount > 0)
+            {
+                DestroyImmediate(listItemsContainer.transform.GetChild(0).gameObject);
+            }
+        }
+      
+    }
+    void PopulateGridView()
     {
         ClearView();
         foreach(var item in shopModel.GetShopItems()) {
-            AddItemToView(item);
+            AddGridItemToView(item);
         }
     }
 
-    void AddItemToView(Item newItem) {
+    void PopulateListView() {
+        ClearView();
+        foreach (var item in shopModel.GetShopItems())
+        {
+            AddListItemToView(item);
+        }
+    }
+
+    void AddListItemToView(Item newItem) {
+        GameObject itemObj = Instantiate(listItemPrefab, listItemsContainer.transform);
+        itemObj.GetComponent<ItemView>().SetItemData(newItem);
+        itemObj.GetComponent<ItemView>().Display();
+    }
+
+    void AddGridItemToView(Item newItem) {
        GameObject itemObj = Instantiate(gridItemPrefab, gridItemsContainer.transform);
        itemObj.GetComponent<ItemView>().SetItemData(newItem);
        itemObj.GetComponent<ItemView>().Display();
@@ -53,6 +86,6 @@ public class ShopView : MonoBehaviour
 
     private void OnDestroy()
     {
-        shopModel.onInventoryUpdate -= PopulateTheView;
+        shopModel.onInventoryUpdate -= PopulateGridView;
     }
 }
