@@ -34,8 +34,8 @@ public class ShopView : MonoBehaviour
             Debug.LogError("There is no Shop Model in the scene");
         }
 
-        shopModel.onInventoryUpdate += PopulateGridView;
-        PopulateGridView();
+        shopModel.onInventoryUpdate += updateViews;
+        updateViews();
     }
 
 
@@ -56,16 +56,23 @@ public class ShopView : MonoBehaviour
         }
       
     }
+
+    void updateViews() {
+        ClearView();
+        PopulateGridView();
+        PopulateListView();
+    }
+
     void PopulateGridView()
     {
-        ClearView();
+        //ClearView();
         foreach(var item in shopModel.GetShopItems()) {
             AddGridItemToView(item);
         }
     }
 
     void PopulateListView() {
-        ClearView();
+        //ClearView();
         foreach (var item in shopModel.GetShopItems())
         {
             AddListItemToView(item);
@@ -74,8 +81,8 @@ public class ShopView : MonoBehaviour
 
     void AddListItemToView(Item newItem) {
         GameObject itemObj = Instantiate(listItemPrefab, listItemsContainer.transform);
-        itemObj.GetComponent<ItemView>().SetItemData(newItem);
-        itemObj.GetComponent<ItemView>().Display();
+        itemObj.GetComponentInChildren<ItemView>().SetItemData(newItem);
+        itemObj.GetComponentInChildren<ItemView>().Display();
     }
 
     void AddGridItemToView(Item newItem) {
@@ -86,6 +93,9 @@ public class ShopView : MonoBehaviour
 
     private void OnDestroy()
     {
-        shopModel.onInventoryUpdate -= PopulateGridView;
+        //shopModel.onInventoryUpdate -= PopulateGridView;
+        //shopModel.onInventoryUpdate -= PopulateListView;
+
+        shopModel.onInventoryUpdate -= updateViews;
     }
 }
