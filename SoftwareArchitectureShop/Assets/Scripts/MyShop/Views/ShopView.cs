@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ShopView : MonoBehaviour
@@ -25,6 +26,10 @@ public class ShopView : MonoBehaviour
     [SerializeField]
     ItemInfoPanelView panelView;
 
+
+    [SerializeField]
+    TextMeshProUGUI[] balanceDisplay;
+
     private void Awake()
     {
       
@@ -40,7 +45,7 @@ public class ShopView : MonoBehaviour
         }
 
         shopModel.onInventoryUpdate += updateViews;
-        shopModel.onInventoryUpdate += updateItemPanel;
+        shopModel.onInventoryUpdate += updateItemPanelData;
         updateViews();
     }
 
@@ -67,28 +72,38 @@ public class ShopView : MonoBehaviour
         ClearView();
         PopulateGridView();
         PopulateListView();
+        updateBalanceText();
     }
 
     void PopulateGridView()
     {
-        //ClearView();
         foreach(var item in shopModel.GetShopItems()) {
             AddGridItemToView(item);
         }
     }
-
     void PopulateListView() {
-        //ClearView();
         foreach (var item in shopModel.GetShopItems())
         {
             AddListItemToView(item);
         }
     }
 
-    void updateItemPanel() {
+
+    //Updates the item data in list view
+    void updateItemPanelData() {
         if (shopModel.SelectedItem == null) return;
         panelView.SetItemData(shopModel.SelectedItem);
     }
+
+
+    void updateBalanceText() { 
+        foreach(var textMesh in balanceDisplay)
+        {
+            textMesh.text = shopModel.GetBalance().ToString();
+        }
+    
+    }
+
 
     void AddListItemToView(Item newItem) {
         GameObject itemObj = Instantiate(listItemPrefab, listItemsContainer.transform);
@@ -109,6 +124,6 @@ public class ShopView : MonoBehaviour
         //shopModel.onInventoryUpdate -= PopulateListView;
 
         shopModel.onInventoryUpdate -= updateViews;
-        shopModel.onInventoryUpdate -= updateItemPanel;
+        shopModel.onInventoryUpdate -= updateItemPanelData;
     }
 }

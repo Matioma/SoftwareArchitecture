@@ -21,28 +21,18 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions
 
 
     public ItemsCategory selectedCategory = ItemsCategory.All;
-    //public Inventory activeInvetory;
+
+
+    ShopContext shopContext=new ShopContext();
 
 
 
-    //private ShopType currentShopType = ShopType.Buy;
-
-
-    ShopContext shopContext=new ShopContext(); //Shop context
-
-
-
-
-
-
-
-
-
+    public int GetBalance() {
+        return playerInventory.getBalance();
+    }
 
 
     public Item selectedItem = null;
-
-
     public Item SelectedItem { get { return selectedItem; }}
     
     

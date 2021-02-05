@@ -21,6 +21,9 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     int currencyBalance = 0;
 
+    public int getBalance() {
+        return currencyBalance;
+    }
 
 
 
