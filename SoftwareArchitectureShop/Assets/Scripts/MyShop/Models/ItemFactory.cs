@@ -22,8 +22,10 @@ public class ItemFactory : IItemFactory
     int minArmor = 1;
 
     int hpPerRarity = 150;
-    
-    
+
+    int MaxDamage = 20;
+    int minDamage = 1;
+
     TextAsset LoadFile(string Path)
     {
         return Resources.Load<TextAsset>(Path);
@@ -60,8 +62,9 @@ public class ItemFactory : IItemFactory
         weapon.description = data.descriptions[random.Next(0, data.descriptions.Length)];
         weapon.rarity = CreateItemRarity();
 
+        weapon.attributes = ((int)weapon.rarity + 1) * random.Next(minDamage,MaxDamage) + " damage";
 
-        
+
         for (int i = 0; i < (int)weapon.rarity; i++)
         {
             weapon.echantements.Add(data.enchantements[random.Next(data.enchantements.Length)]);
