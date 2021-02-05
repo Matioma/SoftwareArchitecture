@@ -20,6 +20,11 @@ public class ShopView : MonoBehaviour
     [SerializeField]
     GameObject listItemsContainer;
 
+
+
+    [SerializeField]
+
+
     private void Awake()
     {
       

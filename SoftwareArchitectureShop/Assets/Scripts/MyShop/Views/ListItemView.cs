@@ -20,24 +20,9 @@ public class ListItemView : ItemView
         priceTarget.text = item.price.ToString();
         categoryTarget.text = item.GetType().ToString();
 
-        //IconImageTarget.sprite = this.sprite;
-        //NameTarget.text = item.Name;
-        //priceTarget.text = item.price.ToString();
-        //categoryTarget.text = 
-        //attributesTarget.text = item.attributes;
-
-        //string enchantementText = "";
-        //foreach (var enchantment in item.echantements) { enchantementText += enchantment + "\n"; }
-
-        ////Debug.LogWarning(enchantementText);
-        //echantementsTarget.text = enchantementText;
-        //descriptionTarget.text = item.description;
-        //ratityTarget.text = item.rarity.ToString();
-
         if (item.IsSelected)
         {
             highLight.SetActive(true);
-            //InfoPanelGameObject.SetActive(true);
         }
     }
 }

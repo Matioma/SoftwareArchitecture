@@ -19,6 +19,7 @@ public abstract class ItemView : MonoBehaviour
     {
         this.item = item;
         sprite = spriteAtlas.GetSprite(item.spriteFile);
+        Display();
     }
 
     public abstract void Display();

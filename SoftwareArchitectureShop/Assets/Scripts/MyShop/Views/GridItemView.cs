@@ -30,7 +30,6 @@ public class GridItemView : ItemView
         string enchantementText = "";
         foreach (var enchantment in item.echantements) { enchantementText += enchantment + "\n"; }
 
-        //Debug.LogWarning(enchantementText);
         echantementsTarget.text = enchantementText;
         descriptionTarget.text = item.description;
         ratityTarget.text = item.rarity.ToString();
