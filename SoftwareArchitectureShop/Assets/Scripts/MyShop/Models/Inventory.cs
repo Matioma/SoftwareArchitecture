@@ -50,7 +50,8 @@ public class Inventory
     //Return all invetory items of a specific type
     public List<Item> GetItems(Type type) {
         List<Item> itemsToGet = new List<Item>();
-        foreach (var item in items) {        
+        foreach (var item in items) {
+            if (item == null) continue;
             if (item.GetType().IsSubclassOf(type) || item.GetType() == type)
             {
                 itemsToGet.Add(item);

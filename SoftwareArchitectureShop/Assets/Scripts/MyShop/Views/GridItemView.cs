@@ -23,7 +23,7 @@ public class GridItemView : ItemView
     {
         IconImageTarget.sprite = this.sprite;
         NameTarget.text = item.Name;
-        priceTarget.text = item.price.ToString();
+        priceTarget.text = item.Price.ToString();
         categoryTarget.text = item.GetType().ToString();
         attributesTarget.text = item.attributes;
 

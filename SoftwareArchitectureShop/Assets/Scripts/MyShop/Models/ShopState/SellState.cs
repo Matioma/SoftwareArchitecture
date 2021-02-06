@@ -14,12 +14,11 @@ public class SellState : IShopActions
         if (shopModel.selectedItem == null) return;
 
         //Debug.Log("item price is" + selectedItem.price);
-        if (!shopModel.playerInventory.SpendMoney(shopModel.selectedItem.price))
+        if (!shopModel.playerInventory.SpendMoney(-shopModel.selectedItem.SellPrice))
         {
-            Debug.Log("Item could not be purchased");
+            Debug.Log("Item could not be sold");
             return;
         }
-        Debug.Log("Sell");
         Item previousItem = shopModel.SelectLastItem();
         shopModel.playerInventory.TransferItem(previousItem, shopModel.shopInventory);
         //onInventoryUpdate?.Invoke();

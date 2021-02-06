@@ -28,6 +28,13 @@ public class ItemFactory : IItemFactory
     int MaxDamage = 20;
     int minDamage = 1;
 
+
+    int minPriceValue = 1;
+    int maxPriceValue = 10;
+    int armorPriceMultiplier = 15;
+    int weaponPriceMultipler = 20;
+    int potionPriceMultiplier = 2;
+
     TextAsset LoadFile(string Path)
     {
         return Resources.Load<TextAsset>(Path);
@@ -43,6 +50,8 @@ public class ItemFactory : IItemFactory
 
         armor.description = data.descriptions[random.Next(0, data.descriptions.Length)];
         armor.rarity = CreateItemRarity();
+
+        armor.Price = ((int)armor.rarity+1) * random.Next(minPriceValue, maxPriceValue) * armorPriceMultiplier;
         armor.attributes = random.Next(minArmor, MaxArmor) + " armor";
 
         for (int i = 0; i < (int)armor.rarity; i++) {
@@ -63,6 +72,8 @@ public class ItemFactory : IItemFactory
         weapon.description = data.descriptions[random.Next(0, data.descriptions.Length)];
         weapon.rarity = CreateItemRarity();
 
+
+        weapon.Price = ((int)weapon.rarity+1) * random.Next(minPriceValue, maxPriceValue) * weaponPriceMultipler;
         weapon.attributes = ((int)weapon.rarity + 1) * random.Next(minDamage,MaxDamage) + " damage";
 
 
@@ -84,10 +95,8 @@ public class ItemFactory : IItemFactory
         potion.description = data.descriptions[random.Next(0, data.descriptions.Length)];
         potion.rarity = CreateItemRarity();
 
-
+        potion.Price = ((int)potion.rarity+1) * random.Next(minPriceValue, maxPriceValue) * potionPriceMultiplier;
         potion.attributes = ((int)potion.rarity + 1) * hpPerRarity + " hp";
-
-
 
         for (int i = 0; i < (int)potion.rarity; i++)
         {

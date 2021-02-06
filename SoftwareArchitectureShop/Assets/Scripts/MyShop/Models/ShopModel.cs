@@ -78,8 +78,7 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions
     {
         if (selectedItem == null) return;
 
-        //Debug.Log("item price is" + selectedItem.price);
-        if (!playerInventory.SpendMoney(selectedItem.price))
+        if (!playerInventory.SpendMoney(selectedItem.Price))
         {
             Debug.Log("Item could not be purchased");
             return;
@@ -93,7 +92,7 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions
         if (selectedItem == null) return;
 
         //Debug.Log("item price is" + selectedItem.price);
-        if (!playerInventory.SpendMoney(selectedItem.price))
+        if (!playerInventory.SpendMoney(selectedItem.Price))
         {
             Debug.Log("Item could not be purchased");
             return;
@@ -108,7 +107,7 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions
         if (selectedItem == null) return;
 
         //Debug.Log("item price is" + selectedItem.price);
-        if (!playerInventory.SpendMoney(selectedItem.price))
+        if (!playerInventory.SpendMoney(selectedItem.Price))
         {
             Debug.Log("Item could not be purchased");
             return;

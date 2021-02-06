@@ -17,7 +17,7 @@ public class ListItemView : ItemView
 
 
         NameTarget.text = item.Name;
-        priceTarget.text = item.price.ToString();
+        priceTarget.text = item.Price.ToString();
         categoryTarget.text = item.GetType().ToString();
 
         if (item.IsSelected)

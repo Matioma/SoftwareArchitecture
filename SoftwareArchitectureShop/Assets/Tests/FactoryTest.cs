@@ -34,7 +34,7 @@ namespace Tests
 
             Item item = itemFactory.CreateArmor();
 
-            Assert.IsTrue(item.price >= 0);            
+            Assert.IsTrue(item.Price >= 0);            
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace Tests
 
             Item item = itemFactory.CreateWeapon();
 
-            Assert.IsTrue(item.price >= 0);
+            Assert.IsTrue(item.Price >= 0);
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace Tests
 
             Item item = itemFactory.CreatePotion();
 
-            Assert.IsTrue(item.price >= 0);
+            Assert.IsTrue(item.Price >= 0);
         }
 
         [Test]

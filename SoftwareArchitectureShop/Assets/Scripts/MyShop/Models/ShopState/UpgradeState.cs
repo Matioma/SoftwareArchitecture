@@ -14,13 +14,13 @@ public class UpgradeState : IShopActions
         if (shopModel.selectedItem == null) return;
 
         //Debug.Log("item price is" + selectedItem.price);
-        if (!shopModel.playerInventory.SpendMoney(shopModel.selectedItem.price))
+        if (!shopModel.playerInventory.SpendMoney(shopModel.selectedItem.UpgradePrice))
         {
-            Debug.Log("Item could not be purchased");
+            Debug.Log("Item could not be upgraded");
             return;
         }
         Item previousItem = shopModel.SelectLastItem();
-        Debug.Log("To Do  Item Upgrading");
+        previousItem.Upgrade();
         //playerInventory.TransferItem(previousItem, shopInventory);
         //onInventoryUpdate?.Invoke();
     }

@@ -43,10 +43,10 @@ namespace Tests
             inventory.Balance = 0;
             ItemFactory factory = new ItemFactory();
             Item item = factory.CreateArmor();
-            item.price = 10;
+            item.Price = 10;
 
 
-            Assert.IsFalse(inventory.canBuy(item.price));
+            Assert.IsFalse(inventory.canBuy(item.Price));
         }
         [Test]
         public void Can_SpendMoney_iF_balance_bigger_than_price()
@@ -55,9 +55,9 @@ namespace Tests
             inventory.Balance = 100;
             ItemFactory factory = new ItemFactory();
             Item item = factory.CreateArmor();
-            item.price = 10;
+            item.Price = 10;
 
-            Assert.IsTrue(inventory.canBuy(item.price));
+            Assert.IsTrue(inventory.canBuy(item.Price));
         }
 
 
