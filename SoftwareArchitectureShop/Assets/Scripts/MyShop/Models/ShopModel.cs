@@ -13,6 +13,7 @@ public enum ShopType {
 
 public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions
 {
+
     [SerializeField]
     public Inventory playerInventory;
     [SerializeField]
@@ -42,6 +43,11 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions
 
     private void Awake()
     {
+        //playerInventory = new Inventory();
+        //playerInventory.Balance = 10000;
+        //shopInventory = new Inventory();
+        
+        
         shopContext.setShopState(new BuyState());
         //activeInvetory = shopInventory;
         itemFactory = new ItemFactory();

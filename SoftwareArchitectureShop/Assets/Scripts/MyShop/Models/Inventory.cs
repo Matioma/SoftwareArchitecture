@@ -13,7 +13,8 @@ public enum ItemsCategory{
 }
 
 
-public class Inventory : MonoBehaviour
+[Serializable]
+public class Inventory
 {
     [SerializeField]
     List<Item> items = new List<Item>();
@@ -25,6 +26,14 @@ public class Inventory : MonoBehaviour
         return currencyBalance;
     }
 
+    public int Balance { 
+        get { return currencyBalance; } 
+        set { currencyBalance = value; } 
+    }
+
+    public List<Item> Items {
+        get { return items; }
+    }
 
 
     public Item getItem(int index) {
@@ -92,6 +101,6 @@ public class Inventory : MonoBehaviour
     
     public void TransferItem(Item item, Inventory destination) {
         destination.items.Add(item);
-        items.Remove(item);
+        this.items.Remove(item);
     }
 }
