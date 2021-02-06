@@ -2,57 +2,53 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyBoardController : BaseController, IShopKeyboardActions
+public class KeyBoardController : BaseController
 {
     IShopKeyboardActions shopKeyboardActions;
 
 
     private void Start() {
         base.Start();
-        shopKeyboardActions = shopShopModel.GetComponent<IShopKeyboardActions>();
+        shopKeyboardActions = FindObjectOfType<ShopModel>();
         if (shopKeyboardActions == null)
         {
             Debug.LogError("Shop Model was not created");
         }
     }
 
-    public void SelectNextCategory()
-    {
-        shopKeyboardActions.SelectNextCategory();
-    }
-
-    public void SelectNextItem()
-    {
-        shopKeyboardActions.SelectNextItem();
-    }
-
-    public void SelectPreviousCategory()
-    {
-        shopKeyboardActions.SelectPreviousCategory();
-    }
-
-    public void SelectPreviousItem()
-    {
-        shopKeyboardActions.SelectPreviousItem();
-    }
-
+    //public void SelectNextCategory()
+    //{
+    //    shopKeyboardActions.SelectNextCategory();
+    //}
+    //public void SelectNextItem()
+    //{
+    //    shopKeyboardActions.SelectNextItem();
+    //}
+    //public void SelectPreviousCategory()
+    //{
+    //    shopKeyboardActions.SelectPreviousCategory();
+    //}
+    //public void SelectPreviousItem()
+    //{
+    //    shopKeyboardActions.SelectPreviousItem();
+    //}
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return)) {
             PerformAction();
         }
         if (Input.GetKeyDown(KeyCode.Q)) {
-            SelectPreviousCategory();
+            shopKeyboardActions.SelectPreviousCategory();
         }
         if (Input.GetKeyDown(KeyCode.E)) {
-            SelectNextCategory();
+            shopKeyboardActions.SelectNextCategory();
         }
 
         if (Input.GetKeyDown(KeyCode.D)) {
-            SelectNextItem();
+            shopKeyboardActions.SelectNextItem();
         }
         if (Input.GetKeyDown(KeyCode.A)) {
-            SelectPreviousItem();
+            shopKeyboardActions.SelectPreviousItem();
         }
     }
 

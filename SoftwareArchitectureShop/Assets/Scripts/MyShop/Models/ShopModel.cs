@@ -11,7 +11,7 @@ public enum ShopType {
 }
 
 
-public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions
+public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions,IShopMainAction
 {
 
     [SerializeField]

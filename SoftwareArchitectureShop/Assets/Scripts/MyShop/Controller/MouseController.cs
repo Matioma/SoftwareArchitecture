@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MouseController : BaseController, IPointerClickHandler,IShopMouseActions
+public class MouseController : BaseController, IPointerClickHandler
 {
     IShopMouseActions shopMouseAction;
 
@@ -13,7 +13,8 @@ public class MouseController : BaseController, IPointerClickHandler,IShopMouseAc
     private void Start()
     {
         base.Start();
-        shopMouseAction = shopShopModel.GetComponent<IShopMouseActions>();
+
+        shopMouseAction = FindObjectOfType<ShopModel>();
         if (shopMouseAction == null)
         {
             Debug.LogError("Shop Model was not created");
@@ -29,26 +30,27 @@ public class MouseController : BaseController, IPointerClickHandler,IShopMouseAc
         }
     }
 
-    public void SelectItem(Item item)
-    {
-        shopMouseAction.SelectItem(item);
-    }
+    //public void SelectItem(Item item)
+    //{
+    //    shopMouseAction.SelectItem(item);
+    //}
 
     public void SelectionCategory(string category) {
         ItemsCategory itemCategory;
 
         if (Enum.TryParse(category, true, out itemCategory))
         {
-            SelectCategory(itemCategory);
+            shopMouseAction.SelectCategory(itemCategory);
+            //SelectCategory(itemCategory);
         }
         else {
             Debug.LogError("THe category is wrong");
         }
     }
-    public void SelectCategory(ItemsCategory catergory)
-    {
-        shopMouseAction.SelectCategory(catergory);
-    }
+    //public void SelectCategory(ItemsCategory catergory)
+    //{
+    //    shopMouseAction.SelectCategory(catergory);
+    //}
     public void Buy() {
         PerformAction();
     }
@@ -82,6 +84,5 @@ public class MouseController : BaseController, IPointerClickHandler,IShopMouseAc
                 shopShopModel.SelectShopType(new UpgradeState());
                 break;
         }
-        //shopMouseAction.SelectShopType(shopType);
     }
 }
