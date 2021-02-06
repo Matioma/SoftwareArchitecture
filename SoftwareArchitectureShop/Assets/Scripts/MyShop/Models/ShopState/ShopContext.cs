@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class ShopContext : IShopActions
+public class ShopContext : IShopStateActions
 {
-    IShopActions currentState;
+    IShopStateActions currentState;
 
     public ShopContext() { }
 
@@ -19,7 +19,7 @@ public class ShopContext : IShopActions
         currentState.PerformAction(shopModel);
     }
 
-    public void setShopState(IShopActions currentState)
+    public void setShopState(IShopStateActions currentState)
     {
         this.currentState = currentState;
     }

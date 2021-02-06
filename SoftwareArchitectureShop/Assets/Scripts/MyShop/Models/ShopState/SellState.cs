@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SellState : IShopActions
+public class SellState : IShopStateActions
 {
     public List<Item> GetShopItems(ShopModel shopModel)
     {

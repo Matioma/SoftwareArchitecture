@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpgradeState : IShopActions
+public class UpgradeState : IShopStateActions
 {
     public List<Item> GetShopItems(ShopModel shopModel)
     {

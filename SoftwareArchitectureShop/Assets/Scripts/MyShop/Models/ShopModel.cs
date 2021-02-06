@@ -126,7 +126,7 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions
         onInventoryUpdate?.Invoke();
     }
 
-    public void SelectShopType(IShopActions newShopState)
+    public void SelectShopType(IShopStateActions newShopState)
     {
         shopContext.setShopState(newShopState);
         onInventoryUpdate?.Invoke();

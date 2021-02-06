@@ -17,7 +17,10 @@ public class ItemFactory : IItemFactory
 {
     System.Random random = new System.Random();
 
-    FacadeClass<ItemDataFile> facadeClass = new FacadeClass<ItemDataFile>();
+    //FacadeClass<ItemDataFile> parser = new FacadeClass<ItemDataFile>();
+
+    IJsonParser<ItemDataFile> parser = new FacadeClass<ItemDataFile>();
+
 
 
     int MaxArmor = 20;
@@ -42,7 +45,7 @@ public class ItemFactory : IItemFactory
 
     public Armor CreateArmor()
     {
-        ItemDataFile data = facadeClass.ParseJson("itemGeneration/Armors");
+        ItemDataFile data = parser.ParseJson("itemGeneration/Armors");
         
         //LoadFile
         Armor armor = new Armor("armorObject " + random.Next(0,1000), "items_" + random.Next(102, 124), 10);
@@ -63,7 +66,7 @@ public class ItemFactory : IItemFactory
     public Weapon CreateWeapon()
     {
 
-        ItemDataFile data = facadeClass.ParseJson("itemGeneration/Weapons");
+        ItemDataFile data = parser.ParseJson("itemGeneration/Weapons");
 
         //LoadFile
         Weapon weapon = new Weapon("weaponObject " + random.Next(0, 1000), "items_" + random.Next(73, 102), 10);
@@ -87,7 +90,7 @@ public class ItemFactory : IItemFactory
 
     public Potion CreatePotion()
     {
-        ItemDataFile data = facadeClass.ParseJson("itemGeneration/Potions");
+        ItemDataFile data = parser.ParseJson("itemGeneration/Potions");
 
         Potion potion = new Potion("weaponObject " + random.Next(0, 1000), "items_" + random.Next(130, 145), 10);
         potion.Name = data.names[random.Next(0, data.names.Length)];
