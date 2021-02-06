@@ -19,8 +19,10 @@ public class UpgradeState : IShopActions
             Debug.Log("Item could not be upgraded");
             return;
         }
-        Item previousItem = shopModel.SelectLastItem();
-        previousItem.Upgrade();
+        //Item previousItem = shopModel.SelectLastItem();
+
+        shopModel.selectedItem.Upgrade();
+        //previousItem.Upgrade();
         //playerInventory.TransferItem(previousItem, shopInventory);
         //onInventoryUpdate?.Invoke();
     }

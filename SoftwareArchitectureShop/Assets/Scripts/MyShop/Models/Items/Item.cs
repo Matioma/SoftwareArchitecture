@@ -25,7 +25,7 @@ public abstract class Item
             return price;
         }
         set {
-            SellPrice = (int)(price * 0.8);
+            SellPrice = (int)((float)value * 0.8);
             price = value;
         } 
     }
