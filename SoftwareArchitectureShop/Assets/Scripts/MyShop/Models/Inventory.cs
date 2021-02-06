@@ -60,7 +60,7 @@ public class Inventory
         return itemsToGet;
     }
 
-    //Return all visible items
+    //Return all visible items based on selected catergory
     public List<Item> GetItems(ItemsCategory currentCategory)
     {
         List<Item> items = new List<Item>();
@@ -94,7 +94,6 @@ public class Inventory
     public bool SpendMoney(int amount) {
         if (canBuy(amount)) {
             currencyBalance -= amount;
-            //Debug.Log(currencyBalance);
             return true;
         }
         return false;

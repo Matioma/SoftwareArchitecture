@@ -17,7 +17,6 @@ public class ItemFactory : IItemFactory
 {
     System.Random random = new System.Random();
 
-    //FacadeClass<ItemDataFile> parser = new FacadeClass<ItemDataFile>();
 
     IJsonParser<ItemDataFile> parser = new FacadeClass<ItemDataFile>();
 
@@ -38,17 +37,14 @@ public class ItemFactory : IItemFactory
     int weaponPriceMultipler = 20;
     int potionPriceMultiplier = 2;
 
-    TextAsset LoadFile(string Path)
-    {
-        return Resources.Load<TextAsset>(Path);
-    }
+    
 
     public Armor CreateArmor()
     {
         ItemDataFile data = parser.ParseJson("itemGeneration/Armors");
         
         //LoadFile
-        Armor armor = new Armor("armorObject " + random.Next(0,1000), "items_" + random.Next(102, 124), 10);
+        Armor armor = new Armor("armorObject ", "items_" + random.Next(102, 124), 10);
         armor.Name = data.names[random.Next(0, data.names.Length)];
 
         armor.description = data.descriptions[random.Next(0, data.descriptions.Length)];
@@ -69,7 +65,7 @@ public class ItemFactory : IItemFactory
         ItemDataFile data = parser.ParseJson("itemGeneration/Weapons");
 
         //LoadFile
-        Weapon weapon = new Weapon("weaponObject " + random.Next(0, 1000), "items_" + random.Next(73, 102), 10);
+        Weapon weapon = new Weapon("weaponObject " , "items_" + random.Next(73, 102), 10);
         weapon.Name = data.names[random.Next(0, data.names.Length)];
 
         weapon.description = data.descriptions[random.Next(0, data.descriptions.Length)];
@@ -92,7 +88,7 @@ public class ItemFactory : IItemFactory
     {
         ItemDataFile data = parser.ParseJson("itemGeneration/Potions");
 
-        Potion potion = new Potion("weaponObject " + random.Next(0, 1000), "items_" + random.Next(130, 145), 10);
+        Potion potion = new Potion("weaponObject ", "items_" + random.Next(130, 145), 10);
         potion.Name = data.names[random.Next(0, data.names.Length)];
 
         potion.description = data.descriptions[random.Next(0, data.descriptions.Length)];

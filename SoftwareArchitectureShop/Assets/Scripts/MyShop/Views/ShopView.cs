@@ -45,7 +45,7 @@ public class ShopView : MonoBehaviour
         }
 
         shopModel.onInventoryUpdate += updateViews;
-        shopModel.onInventoryUpdate += updateItemPanelData;
+        //shopModel.onInventoryUpdate += updateItemPanelData;
         updateViews();
     }
 
@@ -73,6 +73,7 @@ public class ShopView : MonoBehaviour
         PopulateGridView();
         PopulateListView();
         updateBalanceText();
+        updateItemPanelData();
     }
 
     void PopulateGridView()
@@ -124,6 +125,6 @@ public class ShopView : MonoBehaviour
         //shopModel.onInventoryUpdate -= PopulateListView;
 
         shopModel.onInventoryUpdate -= updateViews;
-        shopModel.onInventoryUpdate -= updateItemPanelData;
+        //shopModel.onInventoryUpdate -= updateItemPanelData;
     }
 }

@@ -19,7 +19,7 @@ namespace Tests
 
 
         [Test]
-        public void Trasnfer_Item_Beetween_Inventories()
+        public void Transfer_Item_Beetween_Inventories()
         {
             Inventory inventory1 = new Inventory();
             Inventory inventory2 = new Inventory();
@@ -27,7 +27,6 @@ namespace Tests
 
             Item newItem = factory.CreateArmor();
             inventory1.AddItem(newItem);
-
             inventory1.TransferItem(newItem, inventory2);
 
             

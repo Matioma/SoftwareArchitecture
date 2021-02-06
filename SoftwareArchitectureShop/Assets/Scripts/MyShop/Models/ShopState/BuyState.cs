@@ -13,7 +13,6 @@ public class BuyState : IShopStateActions
     {
         if (shopModel.selectedItem == null) return;
 
-        //Debug.Log("item price is" + selectedItem.price);
         if (!shopModel.playerInventory.SpendMoney(shopModel.selectedItem.Price))
         {
             Debug.Log("Item could not be purchased");

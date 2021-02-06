@@ -16,22 +16,6 @@ public class KeyBoardController : BaseController
         }
     }
 
-    //public void SelectNextCategory()
-    //{
-    //    shopKeyboardActions.SelectNextCategory();
-    //}
-    //public void SelectNextItem()
-    //{
-    //    shopKeyboardActions.SelectNextItem();
-    //}
-    //public void SelectPreviousCategory()
-    //{
-    //    shopKeyboardActions.SelectPreviousCategory();
-    //}
-    //public void SelectPreviousItem()
-    //{
-    //    shopKeyboardActions.SelectPreviousItem();
-    //}
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return)) {

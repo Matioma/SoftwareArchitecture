@@ -27,7 +27,6 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions,I
     ShopContext shopContext=new ShopContext();
 
 
-
     public int GetBalance() {
         return playerInventory.getBalance();
     }
@@ -36,24 +35,21 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions,I
     public Item selectedItem = null;
     public Item SelectedItem { get { return selectedItem; }}
     
-    
     public event Action onInventoryUpdate;
 
 
 
     private void Awake()
     {
-        //playerInventory = new Inventory();
-        //playerInventory.Balance = 10000;
-        //shopInventory = new Inventory();
-        
-        
         shopContext.setShopState(new BuyState());
-        //activeInvetory = shopInventory;
         itemFactory = new ItemFactory();
         GenerateShopProducts();
     }
 
+
+    /// <summary>
+    /// Initilizes the shop inventory
+    /// </summary>
     void GenerateShopProducts() {
         for (int i = 0; i < 10; i++) {
             shopInventory.AddItem(itemFactory.CreateWeapon());
@@ -71,58 +67,12 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions,I
     //Return all the items of the currently selected inventory
     public List<Item> GetShopItems() {
         return shopContext.GetShopItems(this);
-        //return activeInvetory.GetItems(selectedCategory);
     }
 
-    public void Buy()
-    {
-        if (selectedItem == null) return;
-
-        if (!playerInventory.SpendMoney(selectedItem.Price))
-        {
-            Debug.Log("Item could not be purchased");
-            return;
-        }
-        Item previousItem = SelectLastItem();
-        shopInventory.TransferItem(previousItem, playerInventory);
-        onInventoryUpdate?.Invoke();
-    }
-    public void Sell()
-    {
-        if (selectedItem == null) return;
-
-        //Debug.Log("item price is" + selectedItem.price);
-        if (!playerInventory.SpendMoney(selectedItem.Price))
-        {
-            Debug.Log("Item could not be purchased");
-            return;
-        }
-        Item previousItem = SelectLastItem();
-        playerInventory.TransferItem(previousItem, shopInventory);
-        onInventoryUpdate?.Invoke();
-    }
-
-    public void Upgrade()
-    {
-        if (selectedItem == null) return;
-
-        //Debug.Log("item price is" + selectedItem.price);
-        if (!playerInventory.SpendMoney(selectedItem.Price))
-        {
-            Debug.Log("Item could not be purchased");
-            return;
-        }
-        Item previousItem = SelectLastItem();
-        Debug.Log("To Do  Item Upgrading");
-        //playerInventory.TransferItem(previousItem, shopInventory);
-        onInventoryUpdate?.Invoke();
-    }
-
+   
     public void SelectShopType(ShopType newShopType) {
         
         selectedCategory = ItemsCategory.All;
-        //currentShopType = newShopType;
-
         onInventoryUpdate?.Invoke();
     }
 
@@ -132,8 +82,7 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions,I
         onInventoryUpdate?.Invoke();
     }
 
-
-
+    //Selects the item to the left if current item sold/bought
     public Item SelectLastItem() {
         if (selectedItem == null) return null;  // Nothing was selected
 
@@ -163,6 +112,7 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions,I
         
     }
 
+    //Deselectes Currently selected Item
     public void DeselectItem()
     {
         if (selectedItem == null) return; 
@@ -170,6 +120,8 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions,I
         selectedItem.IsSelected = false;
         selectedItem = null;
     }
+   
+    //Makes an item selected
     public void SelectItem(Item item)
     {
         if (item == null) return;
@@ -185,6 +137,9 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions,I
         selectedCategory = catergory;
         onInventoryUpdate?.Invoke();
     }
+
+
+    //Perform the main shop action Buy/sell/upgrade
     public void PerformAction()
     {
         shopContext.PerformAction(this);
@@ -224,6 +179,7 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions,I
             SelectItem(visibleItems[(index + 1) % visibleItems.Count]);
         }
     }
+    //Selects the item to the left
     public void SelectPreviousItem()
     {
         List<Item> visibleItems = GetShopItems();
@@ -244,16 +200,8 @@ public class ShopModel : MonoBehaviour, IShopMouseActions,IShopKeyboardActions,I
             else {
                 SelectItem(visibleItems[(index - 1) % visibleItems.Count]);
             }
-
-
-          
         }
     }
-
-
-
-
-
 
     //Utility function to get the next Category
     ItemsCategory? NextCategory(ItemsCategory category)

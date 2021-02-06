@@ -30,10 +30,6 @@ public class MouseController : BaseController, IPointerClickHandler
         }
     }
 
-    //public void SelectItem(Item item)
-    //{
-    //    shopMouseAction.SelectItem(item);
-    //}
 
     public void SelectionCategory(string category) {
         ItemsCategory itemCategory;
@@ -47,10 +43,6 @@ public class MouseController : BaseController, IPointerClickHandler
             Debug.LogError("THe category is wrong");
         }
     }
-    //public void SelectCategory(ItemsCategory catergory)
-    //{
-    //    shopMouseAction.SelectCategory(catergory);
-    //}
     public void Buy() {
         PerformAction();
     }
